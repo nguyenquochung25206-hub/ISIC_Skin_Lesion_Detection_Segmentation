@@ -1,4 +1,4 @@
-```python
+
 """
 train_detection.py
 
@@ -382,27 +382,5 @@ project/
 │
 └── results/
     └── detection/
-```
-
-### Cài thư viện
-
-```bash
-pip install torch torchvision pillow numpy
-```
-
-### Chạy
-
-```bash
-python train_detection.py
-```
-
-Model sau khi train:
-
-```text
-results/
-└── detection/
-    ├── best_model.pth
-    └── last_model.pth
-```
 
 **Lưu ý quan trọng:** Script này tạo Bounding Box trực tiếp từ **Ground Truth Mask**. Vì vậy dataset train phải có ảnh và mask cùng ID, ví dụ `ISIC_001.jpg` ↔ `ISIC_001.png`.
