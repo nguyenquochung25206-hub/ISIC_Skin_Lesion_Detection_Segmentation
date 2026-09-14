@@ -128,4 +128,4 @@ if __name__ == "__main__":
     main()
 
 
-**Lưu ý:** Đây là script đánh giá cơ bản cho **một Bounding Box/ảnh**. Khi nhóm đã có output Faster R-CNN trên toàn bộ test set, nên mở rộng script để tính **Mean IoU, Precision, Recall và mAP trên toàn bộ dataset**.
+#**Lưu ý:** Đây là script đánh giá cơ bản cho **một Bounding Box/ảnh**. Khi nhóm đã có output Faster R-CNN trên toàn bộ test set, nên mở rộng script để tính **Mean IoU, Precision, Recall và mAP trên toàn bộ dataset**.

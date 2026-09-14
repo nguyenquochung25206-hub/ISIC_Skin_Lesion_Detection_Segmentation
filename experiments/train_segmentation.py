@@ -515,4 +515,4 @@ if __name__ == "__main__":
     main()
 
 
-**Lưu ý:** Bản này dùng `256×256`, `BCE + Dice Loss` và chưa có augmentation/validation. Đây là bản phù hợp để nhóm **chạy được pipeline trước**; sau khi chạy ổn, nên thêm validation và augmentation để có kết quả báo cáo đáng tin cậy hơn.
+#**Lưu ý:** Bản này dùng `256×256`, `BCE + Dice Loss` và chưa có augmentation/validation. Đây là bản phù hợp để nhóm **chạy được pipeline trước**; sau khi chạy ổn, nên thêm validation và augmentation để có kết quả báo cáo đáng tin cậy hơn.

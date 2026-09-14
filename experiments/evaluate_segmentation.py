@@ -145,4 +145,4 @@ if __name__ == "__main__":
     main()
 
 
-**Lưu ý:** File này hiện đánh giá **một ảnh**. Khi chạy project thật, nên mở rộng thành đánh giá toàn bộ `test/` và xuất bảng `CSV` gồm từng ảnh + **Mean Dice / Mean IoU / Mean Precision / Mean Recall** để đưa trực tiếp vào `segmentation_results.md`.
+#**Lưu ý:** File này hiện đánh giá **một ảnh**. Khi chạy project thật, nên mở rộng thành đánh giá toàn bộ `test/` và xuất bảng `CSV` gồm từng ảnh + **Mean Dice / Mean IoU / Mean Precision / Mean Recall** để đưa trực tiếp vào `segmentation_results.md`.

@@ -367,20 +367,18 @@ if __name__ == "__main__":
 
 ```text
 project/
-├── data/
-│   ├── images/
-│   │   └── train/
-│   │       ├── ISIC_001.jpg
-│   │       └── ...
-│   │
-│   └── masks/
-│       └── train/
-│           ├── ISIC_001.png
-│           └── ...
-│
-├── train_detection.py
-│
-└── results/
-    └── detection/
+# Cấu trúc dữ liệu:
+# ├── data/
+# │   ├── images/
+# │   │   └── train/
+# │   │       ├── ISIC_001.jpg
+# │   │       └── ...
+# │   └── masks/
+# │       └── train/
+# │           ├── ISIC_001.png
+# │           └── ...
+# ├── train_detection.py
+# └── results/
+#     └── detection/
 
-**Lưu ý quan trọng:** Script này tạo Bounding Box trực tiếp từ **Ground Truth Mask**. Vì vậy dataset train phải có ảnh và mask cùng ID, ví dụ `ISIC_001.jpg` ↔ `ISIC_001.png`.
+#**Lưu ý quan trọng:** Script này tạo Bounding Box trực tiếp từ **Ground Truth Mask**. Vì vậy dataset train phải có ảnh và mask cùng ID, ví dụ `ISIC_001.jpg` ↔ `ISIC_001.png`.

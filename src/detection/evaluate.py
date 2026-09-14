@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 FASTER R-CNN DETECTION EVALUATION
 
@@ -32,29 +31,17 @@ import sys
 import numpy as np
 import torch
 
-=======
-from pathlib import Path
-import json
-
-import numpy as np
-import torch
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 from PIL import Image
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 from torchvision.transforms import functional as TF
 
 
 # ============================================================
-<<<<<<< HEAD
 # 1. CONFIG
-=======
-# CONFIG
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-<<<<<<< HEAD
 # Dataset da preprocessing
 IMAGE_DIR = (
     PROJECT_ROOT
@@ -112,31 +99,10 @@ NUM_CLASSES = 2
 SCORE_THRESHOLD = 0.5
 
 # IoU >= 0.5 duoc xem la detection dung
-=======
-IMAGE_DIR = PROJECT_ROOT / "data" / "images" / "test"
-MASK_DIR = PROJECT_ROOT / "data" / "masks" / "test"
-
-MODEL_PATH = PROJECT_ROOT / "results" / "detection" / "best_model.pth"
-
-OUTPUT_DIR = PROJECT_ROOT / "results" / "detection" / "evaluation"
-
-OUTPUT_FILE = OUTPUT_DIR / "detection_results.json"
-METRICS_FILE = OUTPUT_DIR / "detection_metrics.json"
-
-DEVICE = torch.device(
-    "cuda" if torch.cuda.is_available() else "cpu"
-)
-
-NUM_CLASSES = 2
-
-SCORE_THRESHOLD = 0.5
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 IOU_THRESHOLD = 0.5
 
 
 # ============================================================
-<<<<<<< HEAD
 # 2. FIND MASK
 # ============================================================
 
@@ -174,20 +140,13 @@ def find_mask(image_path):
 
 # ============================================================
 # 3. MASK -> BOUNDING BOX
-=======
-# BOUNDING BOX FROM MASK
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def mask_to_bbox(mask_path):
     """
     Chuyen segmentation mask thanh bounding box.
 
-<<<<<<< HEAD
     Return:
-=======
-    Tra ve:
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
         [xmin, ymin, xmax, ymax]
 
     Neu mask rong:
@@ -198,7 +157,6 @@ def mask_to_bbox(mask_path):
         Image.open(mask_path).convert("L")
     )
 
-<<<<<<< HEAD
     # Lay pixel lesion
     ys, xs = np.where(
         mask > 0
@@ -207,11 +165,6 @@ def mask_to_bbox(mask_path):
     # Mask rong
     if len(xs) == 0 or len(ys) == 0:
 
-=======
-    ys, xs = np.where(mask > 0)
-
-    if len(xs) == 0 or len(ys) == 0:
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
         return None
 
     xmin = int(xs.min())
@@ -229,17 +182,12 @@ def mask_to_bbox(mask_path):
 
 
 # ============================================================
-<<<<<<< HEAD
 # 4. CALCULATE IOU
-=======
-# IOU
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def calculate_iou(box1, box2):
     """
     Tinh Intersection over Union.
-<<<<<<< HEAD
 
     IoU = Intersection / Union
     """
@@ -248,10 +196,6 @@ def calculate_iou(box1, box2):
     # Intersection
     # --------------------------------------------------------
 
-=======
-    """
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     x_left = max(
         box1[0],
         box2[0]
@@ -287,7 +231,6 @@ def calculate_iou(box1, box2):
         * intersection_height
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Area box 1
     # --------------------------------------------------------
@@ -324,20 +267,6 @@ def calculate_iou(box1, box2):
     # Union
     # --------------------------------------------------------
 
-=======
-    area1 = (
-        max(0, box1[2] - box1[0])
-        *
-        max(0, box1[3] - box1[1])
-    )
-
-    area2 = (
-        max(0, box2[2] - box2[0])
-        *
-        max(0, box2[3] - box2[1])
-    )
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     union_area = (
         area1
         + area2
@@ -345,39 +274,25 @@ def calculate_iou(box1, box2):
     )
 
     if union_area <= 0:
-<<<<<<< HEAD
 
         return 0.0
 
     return float(
-=======
-        return 0.0
-
-    return (
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
         intersection_area
         / union_area
     )
 
 
 # ============================================================
-<<<<<<< HEAD
 # 5. CREATE FASTER R-CNN
-=======
-# CREATE MODEL
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def create_model():
     """
-<<<<<<< HEAD
     Tao Faster R-CNN voi 2 classes:
 
         0 = background
         1 = lesion
-=======
-    Tao Faster R-CNN.
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     """
 
     model = fasterrcnn_resnet50_fpn(
@@ -390,16 +305,11 @@ def create_model():
 
 
 # ============================================================
-<<<<<<< HEAD
 # 6. LOAD MODEL
-=======
-# LOAD MODEL
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def load_model():
     """
-<<<<<<< HEAD
     Load Faster R-CNN da huan luyen.
     """
 
@@ -413,11 +323,6 @@ def load_model():
         "Loading model..."
     )
 
-=======
-    Load Faster R-CNN da train.
-    """
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     model = create_model()
 
     checkpoint = torch.load(
@@ -425,13 +330,10 @@ def load_model():
         map_location=DEVICE
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Lay state_dict
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     if isinstance(checkpoint, dict):
 
         if "model_state_dict" in checkpoint:
@@ -446,15 +348,12 @@ def load_model():
                 "state_dict"
             ]
 
-<<<<<<< HEAD
         elif "model_state" in checkpoint:
 
             state_dict = checkpoint[
                 "model_state"
             ]
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
         else:
 
             state_dict = checkpoint
@@ -463,18 +362,14 @@ def load_model():
 
         state_dict = checkpoint
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Load weights
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     model.load_state_dict(
         state_dict
     )
 
-<<<<<<< HEAD
     model.to(
         DEVICE
     )
@@ -485,26 +380,15 @@ def load_model():
         "Model loaded successfully."
     )
 
-=======
-    model.to(DEVICE)
-
-    model.eval()
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     return model
 
 
 # ============================================================
-<<<<<<< HEAD
 # 7. GET IMAGE FILES
-=======
-# GET IMAGE FILES
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def get_image_files():
     """
-<<<<<<< HEAD
     Lay tat ca anh.
 
     Dung iterdir() thay vi glob nhieu lan
@@ -538,39 +422,11 @@ def get_image_files():
     return sorted(
         image_files,
         key=lambda x: x.name.lower()
-=======
-    Lay tat ca anh trong test dataset.
-    """
-
-    extensions = [
-        "*.jpg",
-        "*.jpeg",
-        "*.png",
-        "*.JPG",
-        "*.JPEG",
-        "*.PNG"
-    ]
-
-    image_files = []
-
-    for extension in extensions:
-
-        image_files.extend(
-            IMAGE_DIR.glob(extension)
-        )
-
-    return sorted(
-        image_files
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     )
 
 
 # ============================================================
-<<<<<<< HEAD
 # 8. EVALUATE ONE IMAGE
-=======
-# EVALUATE ONE IMAGE
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def evaluate_image(
@@ -581,7 +437,6 @@ def evaluate_image(
     Danh gia Faster R-CNN tren mot anh.
     """
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Tim mask
     # --------------------------------------------------------
@@ -591,27 +446,16 @@ def evaluate_image(
     )
 
     if mask_path is None:
-=======
-    mask_path = (
-        MASK_DIR
-        / f"{image_path.stem}.png"
-    )
-
-    if not mask_path.exists():
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
         return {
             "image": image_path.name,
             "status": "missing_mask"
         }
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Ground truth bounding box
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     ground_truth_bbox = mask_to_bbox(
         mask_path
     )
@@ -623,13 +467,10 @@ def evaluate_image(
             "status": "empty_mask"
         }
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Load image
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     image = Image.open(
         image_path
     ).convert("RGB")
@@ -642,20 +483,16 @@ def evaluate_image(
         DEVICE
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Prediction
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     with torch.no_grad():
 
         prediction = model(
             [image_tensor]
         )[0]
 
-<<<<<<< HEAD
     boxes = prediction[
         "boxes"
     ]
@@ -670,19 +507,6 @@ def evaluate_image(
 
     keep = (
         scores >= SCORE_THRESHOLD
-=======
-    boxes = prediction["boxes"]
-
-    scores = prediction["scores"]
-
-    # --------------------------------------------------------
-    # Filter confidence score
-    # --------------------------------------------------------
-
-    keep = (
-        scores
-        >= SCORE_THRESHOLD
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     )
 
     boxes = boxes[keep]
@@ -698,26 +522,17 @@ def evaluate_image(
         return {
             "image": image_path.name,
             "status": "no_detection",
-<<<<<<< HEAD
             "ground_truth_bbox": ground_truth_bbox,
             "predicted_bbox": None,
             "confidence": 0.0,
             "iou": 0.0,
-=======
-            "iou": 0.0,
-            "score": 0.0,
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
             "true_positive": 0,
             "false_positive": 0,
             "false_negative": 1
         }
 
     # --------------------------------------------------------
-<<<<<<< HEAD
     # Chon prediction co confidence cao nhat
-=======
-    # Best prediction
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     # --------------------------------------------------------
 
     best_index = torch.argmax(
@@ -745,11 +560,7 @@ def evaluate_image(
     )
 
     # --------------------------------------------------------
-<<<<<<< HEAD
     # Calculate IoU
-=======
-    # IoU
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     # --------------------------------------------------------
 
     iou = calculate_iou(
@@ -777,13 +588,10 @@ def evaluate_image(
         false_positive = 1
         false_negative = 1
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Return
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     return {
         "image": image_path.name,
         "status": status,
@@ -798,25 +606,17 @@ def evaluate_image(
 
 
 # ============================================================
-<<<<<<< HEAD
 # 9. CALCULATE METRICS
-=======
-# CALCULATE METRICS
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def calculate_metrics(results):
     """
-<<<<<<< HEAD
     Tinh:
 
         Precision
         Recall
         F1-score
         Mean IoU
-=======
-    Tinh Precision, Recall va Mean IoU.
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     """
 
     valid_results = [
@@ -825,17 +625,13 @@ def calculate_metrics(results):
         if "iou" in result
     ]
 
-<<<<<<< HEAD
     # Khong co ket qua hop le
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     if len(valid_results) == 0:
 
         return {
             "number_of_images": 0,
             "mean_iou": 0.0,
             "precision": 0.0,
-<<<<<<< HEAD
             "recall": 0.0,
             "f1_score": 0.0,
             "true_positive": 0,
@@ -847,11 +643,6 @@ def calculate_metrics(results):
     # TP / FP / FN
     # --------------------------------------------------------
 
-=======
-            "recall": 0.0
-        }
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     true_positive = sum(
         result["true_positive"]
         for result in valid_results
@@ -867,13 +658,10 @@ def calculate_metrics(results):
         for result in valid_results
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Mean IoU
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     mean_iou = float(
         np.mean(
             [
@@ -883,13 +671,10 @@ def calculate_metrics(results):
         )
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Precision
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     precision = (
         true_positive
         /
@@ -900,13 +685,10 @@ def calculate_metrics(results):
         )
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Recall
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     recall = (
         true_positive
         /
@@ -917,7 +699,6 @@ def calculate_metrics(results):
         )
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # F1-score
     # --------------------------------------------------------
@@ -938,8 +719,6 @@ def calculate_metrics(results):
 
         f1_score = 0.0
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     return {
         "number_of_images": len(
             valid_results
@@ -951,12 +730,9 @@ def calculate_metrics(results):
         "recall": float(
             recall
         ),
-<<<<<<< HEAD
         "f1_score": float(
             f1_score
         ),
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
         "true_positive": int(
             true_positive
         ),
@@ -970,11 +746,7 @@ def calculate_metrics(results):
 
 
 # ============================================================
-<<<<<<< HEAD
 # 10. SAVE RESULTS
-=======
-# SAVE RESULTS
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def save_results(
@@ -982,11 +754,7 @@ def save_results(
     metrics
 ):
     """
-<<<<<<< HEAD
     Luu ket qua evaluation thanh JSON.
-=======
-    Luu ket qua evaluation.
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     """
 
     OUTPUT_DIR.mkdir(
@@ -994,13 +762,10 @@ def save_results(
         exist_ok=True
     )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Chi tiet tung anh
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     with open(
         OUTPUT_FILE,
         "w",
@@ -1014,13 +779,10 @@ def save_results(
             ensure_ascii=False
         )
 
-<<<<<<< HEAD
     # --------------------------------------------------------
     # Metrics tong
     # --------------------------------------------------------
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     with open(
         METRICS_FILE,
         "w",
@@ -1036,27 +798,15 @@ def save_results(
 
 
 # ============================================================
-<<<<<<< HEAD
 # 11. MAIN
-=======
-# MAIN
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def main():
 
     print("=" * 60)
-<<<<<<< HEAD
     print(
         "FASTER R-CNN DETECTION EVALUATION"
     )
-=======
-
-    print(
-        "FASTER R-CNN DETECTION EVALUATION"
-    )
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     print("=" * 60)
 
     print()
@@ -1081,15 +831,9 @@ def main():
         MODEL_PATH
     )
 
-<<<<<<< HEAD
     # ========================================================
     # CHECK IMAGE DIRECTORY
     # ========================================================
-=======
-    # --------------------------------------------------------
-    # Check paths
-    # --------------------------------------------------------
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     if not IMAGE_DIR.exists():
 
@@ -1098,7 +842,6 @@ def main():
             "ERROR: Image directory not found."
         )
 
-<<<<<<< HEAD
         print(
             "Expected:",
             IMAGE_DIR
@@ -1109,9 +852,6 @@ def main():
     # ========================================================
     # CHECK MASK DIRECTORY
     # ========================================================
-=======
-        return
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     if not MASK_DIR.exists():
 
@@ -1120,7 +860,6 @@ def main():
             "ERROR: Mask directory not found."
         )
 
-<<<<<<< HEAD
         print(
             "Expected:",
             MASK_DIR
@@ -1131,9 +870,6 @@ def main():
     # ========================================================
     # CHECK MODEL
     # ========================================================
-=======
-        return
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     if not MODEL_PATH.exists():
 
@@ -1142,7 +878,6 @@ def main():
             "ERROR: Model file not found."
         )
 
-<<<<<<< HEAD
         print(
             "Expected:",
             MODEL_PATH
@@ -1186,32 +921,6 @@ def main():
     # ========================================================
 
     image_files = get_image_files()
-=======
-        return
-
-    # --------------------------------------------------------
-    # Load model
-    # --------------------------------------------------------
-
-    print()
-    print(
-        "Loading model..."
-    )
-
-    model = load_model()
-
-    print(
-        "Model loaded."
-    )
-
-    # --------------------------------------------------------
-    # Get images
-    # --------------------------------------------------------
-
-    image_files = (
-        get_image_files()
-    )
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     print()
 
@@ -1222,7 +931,6 @@ def main():
 
     if len(image_files) == 0:
 
-<<<<<<< HEAD
         print()
         print(
             "ERROR: No images found."
@@ -1233,17 +941,6 @@ def main():
     # ========================================================
     # EVALUATION
     # ========================================================
-=======
-        print(
-            "No images found."
-        )
-
-        return
-
-    # --------------------------------------------------------
-    # Evaluation
-    # --------------------------------------------------------
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     results = []
 
@@ -1257,7 +954,6 @@ def main():
         start=1
     ):
 
-<<<<<<< HEAD
         try:
 
             result = evaluate_image(
@@ -1312,42 +1008,11 @@ def main():
     # ========================================================
     # CALCULATE METRICS
     # ========================================================
-=======
-        result = evaluate_image(
-            model,
-            image_path
-        )
-
-        results.append(
-            result
-        )
-
-        if "iou" in result:
-
-            print(
-                f"[{index}/{len(image_files)}] "
-                f"{image_path.name} "
-                f"IoU={result['iou']:.4f}"
-            )
-
-        else:
-
-            print(
-                f"[{index}/{len(image_files)}] "
-                f"{image_path.name} "
-                f"{result['status']}"
-            )
-
-    # --------------------------------------------------------
-    # Metrics
-    # --------------------------------------------------------
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     metrics = calculate_metrics(
         results
     )
 
-<<<<<<< HEAD
     # ========================================================
     # PRINT RESULT
     # ========================================================
@@ -1361,17 +1026,6 @@ def main():
 
     print()
 
-=======
-    # --------------------------------------------------------
-    # Print summary
-    # --------------------------------------------------------
-
-    print()
-    print("=" * 60)
-    print("RESULT")
-    print("=" * 60)
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     print(
         "Number of images:",
         metrics["number_of_images"]
@@ -1393,7 +1047,6 @@ def main():
     )
 
     print(
-<<<<<<< HEAD
         "F1-score:",
         f"{metrics['f1_score']:.4f}"
     )
@@ -1401,8 +1054,6 @@ def main():
     print()
 
     print(
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
         "True Positive:",
         metrics["true_positive"]
     )
@@ -1417,15 +1068,9 @@ def main():
         metrics["false_negative"]
     )
 
-<<<<<<< HEAD
     # ========================================================
     # SAVE
     # ========================================================
-=======
-    # --------------------------------------------------------
-    # Save
-    # --------------------------------------------------------
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     save_results(
         results,
@@ -1433,10 +1078,6 @@ def main():
     )
 
     print()
-<<<<<<< HEAD
-
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     print(
         "Results saved to:"
     )
@@ -1446,7 +1087,6 @@ def main():
     )
 
     print()
-<<<<<<< HEAD
 
     print(
         "Detection results:"
@@ -1468,13 +1108,10 @@ def main():
 
     print()
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     print(
         "Evaluation completed."
     )
 
-<<<<<<< HEAD
     return 0
 
 
@@ -1511,12 +1148,3 @@ if __name__ == "__main__":
         )
 
         sys.exit(1)
-=======
-
-# ============================================================
-# RUN
-# ============================================================
-
-if __name__ == "__main__":
-    main()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1

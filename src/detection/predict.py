@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 DU DOAN FASTER R-CNN
 
@@ -12,34 +11,22 @@ Output:
     results/detection/predictions/
 """
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 from pathlib import Path
 import json
 
 import torch
-<<<<<<< HEAD
 from PIL import Image, ImageDraw
-=======
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 from torchvision.transforms import functional as TF
 
 from faster_rcnn import create_faster_rcnn
 
 
 # ============================================================
-<<<<<<< HEAD
 # 1. CONFIGURATION
-=======
-# CONFIGURATION
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-<<<<<<< HEAD
 # Anh da preprocessing
 IMAGE_DIR = (
     PROJECT_ROOT
@@ -49,12 +36,6 @@ IMAGE_DIR = (
 )
 
 # Model Faster R-CNN
-=======
-# Anh dau vao
-IMAGE_DIR = PROJECT_ROOT / "data" / "images" / "test"
-
-# Model da train
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 MODEL_PATH = (
     PROJECT_ROOT
     / "results"
@@ -62,11 +43,7 @@ MODEL_PATH = (
     / "best_model.pth"
 )
 
-<<<<<<< HEAD
 # Thu muc ket qua
-=======
-# Thu muc luu ket qua
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 OUTPUT_DIR = (
     PROJECT_ROOT
     / "results"
@@ -79,24 +56,14 @@ OUTPUT_DIR.mkdir(
     exist_ok=True
 )
 
-<<<<<<< HEAD
-=======
-# So class:
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # 0 = background
 # 1 = skin lesion
 NUM_CLASSES = 2
 
-<<<<<<< HEAD
 # Chi giu prediction co confidence >= 0.5
 SCORE_THRESHOLD = 0.5
 
 # CPU / GPU
-=======
-# Nguong confidence
-SCORE_THRESHOLD = 0.5
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 DEVICE = torch.device(
     "cuda"
     if torch.cuda.is_available()
@@ -105,20 +72,10 @@ DEVICE = torch.device(
 
 
 # ============================================================
-<<<<<<< HEAD
 # 2. LOAD MODEL
 # ============================================================
 
 def load_model():
-=======
-# LOAD MODEL
-# ============================================================
-
-def load_model():
-    """
-    Load Faster R-CNN da duoc train.
-    """
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     print("Loading Faster R-CNN...")
 
@@ -127,15 +84,12 @@ def load_model():
         pretrained=False
     )
 
-<<<<<<< HEAD
     if not MODEL_PATH.exists():
 
         raise FileNotFoundError(
             f"Khong tim thay model: {MODEL_PATH}"
         )
 
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     checkpoint = torch.load(
         MODEL_PATH,
         map_location=DEVICE
@@ -178,20 +132,10 @@ def load_model():
 
 
 # ============================================================
-<<<<<<< HEAD
 # 3. LOAD IMAGE
 # ============================================================
 
 def load_image(image_path):
-=======
-# LOAD IMAGE
-# ============================================================
-
-def load_image(image_path):
-    """
-    Doc anh va chuyen sang Tensor.
-    """
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     image = Image.open(
         image_path
@@ -205,23 +149,13 @@ def load_image(image_path):
 
 
 # ============================================================
-<<<<<<< HEAD
 # 4. PREDICT ONE IMAGE
-=======
-# PREDICT ONE IMAGE
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def predict_image(
     model,
     image_tensor
 ):
-<<<<<<< HEAD
-=======
-    """
-    Chay Faster R-CNN tren mot anh.
-    """
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     image_tensor = image_tensor.to(
         DEVICE
@@ -237,11 +171,7 @@ def predict_image(
     scores = prediction["scores"]
     labels = prediction["labels"]
 
-<<<<<<< HEAD
     # Loc confidence
-=======
-    # Loc theo confidence
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     keep = (
         scores
         >= SCORE_THRESHOLD
@@ -251,7 +181,6 @@ def predict_image(
     scores = scores[keep]
     labels = labels[keep]
 
-<<<<<<< HEAD
     return (
         boxes,
         scores,
@@ -261,13 +190,6 @@ def predict_image(
 
 # ============================================================
 # 5. DRAW BOUNDING BOX
-=======
-    return boxes, scores, labels
-
-
-# ============================================================
-# DRAW BOUNDING BOX
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def draw_predictions(
@@ -275,12 +197,6 @@ def draw_predictions(
     boxes,
     scores
 ):
-<<<<<<< HEAD
-=======
-    """
-    Ve bounding box len anh.
-    """
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     result_image = image.copy()
 
@@ -294,12 +210,8 @@ def draw_predictions(
     ):
 
         box = (
-<<<<<<< HEAD
             box
             .detach()
-=======
-            box.detach()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
             .cpu()
             .numpy()
         )
@@ -321,17 +233,12 @@ def draw_predictions(
             width=3
         )
 
-<<<<<<< HEAD
         # Confidence
-=======
-        # Noi dung confidence
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
         text = (
             f"Lesion: "
             f"{float(score):.2f}"
         )
 
-<<<<<<< HEAD
         text_y = max(
             0,
             ymin - 20
@@ -342,13 +249,6 @@ def draw_predictions(
             (
                 xmin,
                 text_y
-=======
-        # Background cho text
-        text_box = draw.textbbox(
-            (
-                xmin,
-                max(0, ymin - 20)
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
             ),
             text
         )
@@ -361,11 +261,7 @@ def draw_predictions(
         draw.text(
             (
                 xmin,
-<<<<<<< HEAD
                 text_y
-=======
-                max(0, ymin - 20)
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
             ),
             text,
             fill="white"
@@ -375,11 +271,7 @@ def draw_predictions(
 
 
 # ============================================================
-<<<<<<< HEAD
 # 6. SAVE RESULT
-=======
-# SAVE PREDICTION
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def save_prediction(
@@ -389,18 +281,9 @@ def save_prediction(
     scores,
     labels
 ):
-<<<<<<< HEAD
 
     # --------------------------------------------------------
     # Save anh co bounding box
-=======
-    """
-    Luu anh prediction va JSON.
-    """
-
-    # --------------------------------------------------------
-    # Anh ket qua
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     # --------------------------------------------------------
 
     result_image = draw_predictions(
@@ -419,11 +302,7 @@ def save_prediction(
     )
 
     # --------------------------------------------------------
-<<<<<<< HEAD
     # Save JSON
-=======
-    # JSON
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     # --------------------------------------------------------
 
     detections = []
@@ -435,12 +314,8 @@ def save_prediction(
     ):
 
         box = (
-<<<<<<< HEAD
             box
             .detach()
-=======
-            box.detach()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
             .cpu()
             .numpy()
             .tolist()
@@ -453,22 +328,14 @@ def save_prediction(
                     for value in box
                 ],
                 "confidence": float(
-<<<<<<< HEAD
                     score
                     .detach()
-=======
-                    score.detach()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
                     .cpu()
                     .item()
                 ),
                 "class_id": int(
-<<<<<<< HEAD
                     label
                     .detach()
-=======
-                    label.detach()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
                     .cpu()
                     .item()
                 )
@@ -502,7 +369,6 @@ def save_prediction(
 
 
 # ============================================================
-<<<<<<< HEAD
 # 7. GET IMAGE FILES
 # ============================================================
 
@@ -526,56 +392,17 @@ def get_image_files():
     return sorted(
         image_files,
         key=lambda x: x.name.lower()
-=======
-# GET IMAGE FILES
-# ============================================================
-
-def get_image_files():
-    """
-    Lay danh sach anh trong test.
-    """
-
-    extensions = [
-        "*.jpg",
-        "*.jpeg",
-        "*.png",
-        "*.JPG",
-        "*.JPEG",
-        "*.PNG"
-    ]
-
-    image_files = []
-
-    for extension in extensions:
-
-        image_files.extend(
-            IMAGE_DIR.glob(extension)
-        )
-
-    return sorted(
-        image_files
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     )
 
 
 # ============================================================
-<<<<<<< HEAD
 # 8. PROCESS ONE IMAGE
-=======
-# PROCESS ONE IMAGE
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def process_image(
     model,
     image_path
 ):
-<<<<<<< HEAD
-=======
-    """
-    Xu ly mot anh.
-    """
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     print()
     print(
@@ -583,18 +410,12 @@ def process_image(
         image_path.name
     )
 
-<<<<<<< HEAD
     # Load
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     image, image_tensor = load_image(
         image_path
     )
 
-<<<<<<< HEAD
     # Predict
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     boxes, scores, labels = (
         predict_image(
             model,
@@ -607,10 +428,7 @@ def process_image(
         len(boxes)
     )
 
-<<<<<<< HEAD
     # Hien thi ket qua
-=======
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     for index, (
         box,
         score
@@ -620,12 +438,8 @@ def process_image(
     ):
 
         box = (
-<<<<<<< HEAD
             box
             .detach()
-=======
-            box.detach()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
             .cpu()
             .numpy()
             .tolist()
@@ -634,17 +448,11 @@ def process_image(
         print(
             f"  Detection {index}: "
             f"bbox={box}, "
-<<<<<<< HEAD
             f"confidence="
             f"{float(score):.4f}"
         )
 
     # Save
-=======
-            f"confidence={float(score):.4f}"
-        )
-
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
     output_path = save_prediction(
         image_path,
         image,
@@ -660,11 +468,7 @@ def process_image(
 
 
 # ============================================================
-<<<<<<< HEAD
 # 9. MAIN
-=======
-# MAIN
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 # ============================================================
 
 def main():
@@ -713,11 +517,7 @@ def main():
             MODEL_PATH
         )
 
-<<<<<<< HEAD
         return 1
-=======
-        return
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     # --------------------------------------------------------
     # Check image directory
@@ -735,17 +535,12 @@ def main():
             IMAGE_DIR
         )
 
-<<<<<<< HEAD
         return 1
-=======
-        return
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     # --------------------------------------------------------
     # Load model
     # --------------------------------------------------------
 
-<<<<<<< HEAD
     try:
 
         model = load_model()
@@ -764,9 +559,6 @@ def main():
         )
 
         return 1
-=======
-    model = load_model()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     # --------------------------------------------------------
     # Get images
@@ -784,23 +576,15 @@ def main():
     if len(image_files) == 0:
 
         print(
-<<<<<<< HEAD
             "ERROR: No images found."
         )
 
         return 1
-=======
-            "No images found."
-        )
-
-        return
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     # --------------------------------------------------------
     # Process images
     # --------------------------------------------------------
 
-<<<<<<< HEAD
     success_count = 0
     error_count = 0
 
@@ -831,14 +615,6 @@ def main():
                 ":",
                 error
             )
-=======
-    for image_path in image_files:
-
-        process_image(
-            model,
-            image_path
-        )
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
 
     # --------------------------------------------------------
     # Finish
@@ -852,7 +628,6 @@ def main():
     print("=" * 60)
 
     print(
-<<<<<<< HEAD
         "Tong so anh:",
         len(image_files)
     )
@@ -918,16 +693,3 @@ if __name__ == "__main__":
         )
 
         sys.exit(1)
-=======
-        "Results saved to:",
-        OUTPUT_DIR
-    )
-
-
-# ============================================================
-# RUN
-# ============================================================
-
-if __name__ == "__main__":
-    main()
->>>>>>> 84107ee48792fac379be4e497041b1766010afe1
