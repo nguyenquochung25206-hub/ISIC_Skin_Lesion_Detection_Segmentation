@@ -1,4 +1,4 @@
-```python
+
 """
 evaluate_segmentation.py
 
@@ -143,44 +143,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
 
-### Cấu trúc thư mục
-
-Script trên giả sử project có dạng:
-
-```text
-project/
-├── data/
-│   └── masks/
-│       └── test/
-│           └── ISIC_001.png
-│
-├── results/
-│   └── segmentation/
-│       └── predictions/
-│           └── ISIC_001.png
-│
-└── evaluate_segmentation.py
-```
-
-### Chạy
-
-```bash
-python evaluate_segmentation.py
-```
-
-Ví dụ:
-
-```text
-=============================================
-U-Net Segmentation Evaluation
-=============================================
-Dice         : 0.8732
-IoU          : 0.7754
-Precision    : 0.9012
-Recall       : 0.8467
-=============================================
-```
 
 **Lưu ý:** File này hiện đánh giá **một ảnh**. Khi chạy project thật, nên mở rộng thành đánh giá toàn bộ `test/` và xuất bảng `CSV` gồm từng ảnh + **Mean Dice / Mean IoU / Mean Precision / Mean Recall** để đưa trực tiếp vào `segmentation_results.md`.
