@@ -89,7 +89,7 @@ class UNet(nn.Module):
         bilinear : True -> dùng Upsample bilinear, False -> dùng ConvTranspose2d
     """
 
-       def __init__(
+    def __init__(
         self,
         n_channels=3,
         n_classes=1,
