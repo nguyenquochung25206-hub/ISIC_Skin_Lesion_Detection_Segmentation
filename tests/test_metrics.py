@@ -352,7 +352,7 @@ def test_segmentation_aggregate_metrics():
     assert "iou" in metrics
     assert "precision" in metrics
     assert "recall" in metrics
-    assert "f1" in metrics
+    assert "f1_score" in metrics
     assert "accuracy" in metrics
 
     assert abs(metrics["dice"] - (6 / 7)) < 1e-6

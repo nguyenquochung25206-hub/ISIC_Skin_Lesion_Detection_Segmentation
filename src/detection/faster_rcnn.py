@@ -209,7 +209,11 @@ def predict(
         "scores": output["scores"][keep]
     }
 
-    return prediction
+    return (
+    prediction["boxes"],
+    prediction["labels"],
+    prediction["scores"]
+)
 
 
 # ============================================================

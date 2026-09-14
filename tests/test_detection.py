@@ -216,7 +216,7 @@ def test_get_best_prediction():
 
     assert best_box is not None
 
-    assert best_score == 0.90
+    assert abs(best_score - 0.90) < 1e-6
 
     print("[PASS] test_get_best_prediction")
 
