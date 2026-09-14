@@ -1,4 +1,4 @@
-```python
+
 """
 evaluate_detection.py
 
@@ -126,30 +126,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
 
-### Cách chạy
-
-```bash
-python evaluate_detection.py
-```
-
-Ví dụ kết quả:
-
-```text
-=============================================
-Faster R-CNN Detection Evaluation
-=============================================
-Ground Truth : [50, 40, 400, 390]
-Prediction   : [55, 45, 395, 385]
-IoU          : 0.9440
-Precision    : 1.0000
-Recall       : 1.0000
----------------------------------------------
-TP: 1
-FP: 0
-FN: 0
-=============================================
-```
 
 **Lưu ý:** Đây là script đánh giá cơ bản cho **một Bounding Box/ảnh**. Khi nhóm đã có output Faster R-CNN trên toàn bộ test set, nên mở rộng script để tính **Mean IoU, Precision, Recall và mAP trên toàn bộ dataset**.
