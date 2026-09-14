@@ -1,4 +1,4 @@
-```python
+
 """
 train_segmentation.py
 
@@ -513,47 +513,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
 
-### Cấu trúc thư mục
-
-```text
-project/
-├── data/
-│   ├── images/
-│   │   └── train/
-│   │       ├── ISIC_001.jpg
-│   │       └── ...
-│   │
-│   └── masks/
-│       └── train/
-│           ├── ISIC_001.png
-│           └── ...
-│
-├── train_segmentation.py
-│
-└── results/
-    └── segmentation/
-        ├── best_model.pth
-        └── last_model.pth
-```
-
-### Cài thư viện
-
-```bash
-pip install torch torchvision pillow numpy
-```
-
-### Chạy
-
-```bash
-python train_segmentation.py
-```
-
-Model tốt nhất sẽ được lưu tại:
-
-```text
-results/segmentation/best_model.pth
-```
 
 **Lưu ý:** Bản này dùng `256×256`, `BCE + Dice Loss` và chưa có augmentation/validation. Đây là bản phù hợp để nhóm **chạy được pipeline trước**; sau khi chạy ổn, nên thêm validation và augmentation để có kết quả báo cáo đáng tin cậy hơn.
