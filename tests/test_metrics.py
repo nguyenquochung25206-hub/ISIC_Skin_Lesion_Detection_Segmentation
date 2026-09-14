@@ -46,18 +46,18 @@ from evaluation.detection_metrics import (
     calculate_iou,
     calculate_precision,
     calculate_recall,
-    calculate_f1,
+    calculate_f1_score as calculate_f1,
     calculate_mean_iou,
     calculate_detection_metrics,
 )
 
 from evaluation.segmentation_metrics import (
-    dice_score,
-    iou_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    accuracy_score,
+    calculate_dice as dice_score,
+    calculate_iou as iou_score,
+    calculate_precision as precision_score,
+    calculate_recall as recall_score,
+    calculate_f1_score as f1_score,
+    calculate_accuracy as accuracy_score,
     calculate_segmentation_metrics,
 )
 
@@ -89,8 +89,8 @@ def test_detection_precision():
     """
 
     precision = calculate_precision(
-        tp=8,
-        fp=2
+        true_positive=8,
+false_positive=2
     )
 
     assert abs(precision - 0.8) < 1e-6
@@ -104,8 +104,8 @@ def test_detection_recall():
     """
 
     recall = calculate_recall(
-        tp=8,
-        fn=2
+      true_positive=8,
+false_negative=2
     )
 
     assert abs(recall - 0.8) < 1e-6
@@ -153,27 +153,17 @@ def test_detection_aggregate_metrics():
     Kiểm tra tổng hợp Detection Metrics.
     """
 
-    results = [
-        {
-            "iou": 0.8,
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-        },
-        {
-            "iou": 0.6,
-            "tp": 1,
-            "fp": 1,
-            "fn": 0
-        }
-    ]
-
-    metrics = calculate_detection_metrics(results)
+    metrics = calculate_detection_metrics(
+    true_positive=2,
+    false_positive=1,
+    false_negative=0,
+    ious=[0.8, 0.6]
+)
 
     assert "mean_iou" in metrics
     assert "precision" in metrics
     assert "recall" in metrics
-    assert "f1" in metrics
+    assert "f1_score" in metrics
 
     assert metrics["mean_iou"] == 0.7
 
