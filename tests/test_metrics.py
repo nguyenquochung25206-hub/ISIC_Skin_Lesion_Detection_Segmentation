@@ -42,7 +42,7 @@ if str(SRC_DIR) not in sys.path:
 # IMPORT METRICS
 # ============================================================
 
-from detection.detection_metrics import (
+from evaluation.detection_metrics import (
     calculate_iou,
     calculate_precision,
     calculate_recall,
@@ -51,7 +51,7 @@ from detection.detection_metrics import (
     calculate_detection_metrics,
 )
 
-from segmentation.segmentation_metrics import (
+from evaluation.segmentation_metrics import (
     dice_score,
     iou_score,
     precision_score,
